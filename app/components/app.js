@@ -2,27 +2,43 @@
 
 var React = require('react');
 var Link = require('react-nested-router').Link;
+var contactStore = require('../stores/contact');
 
 var App = module.exports = React.createClass({
+
+  getInitialState: function() {
+    return { loaded: false, contacts: [] };
+  },
+
+  componentWillMount: function() {
+    this.ref = contactStore.all(this.setStateFromStore);
+  },
+
+  componentWillUnmount: function() {
+    this.ref.destroy();
+  },
+
+  setStateFromStore: function(state) {
+    this.setState({
+      contacts: state.contacts,
+      loaded: state.loaded
+    });
+  },
+
+  renderLinks: function() {
+    return this.state.contacts.map(function(contact) {
+      return <li><Link to="contact" id={contact.id}>{contact.first}</Link></li>
+    });
+  },
 
   render: function() {
     return (
       <div className="container">
-        <h1>App</h1>
+        <h1>Contacts</h1>
         <ul>
-          <li><Link to="index">Home</Link></li>
-          <li><Link to="foo">Foo</Link></li>
-          <li><Link to="bar">Bar</Link></li>
+          {this.state.loaded ? this.renderLinks() : <li>Loading ...</li>}
         </ul>
-        {this.props.activeRoute}
-      </div>
-    );
-  },
-
-  renderIndex: function() {
-    return (
-      <div>
-        <h2>Index</h2>
+        {this.props.activeRoute || <h2>Welcome</h2>}
       </div>
     );
   }
