@@ -20,7 +20,7 @@ var App = module.exports = React.createClass({
 
   setStateFromStore: function(state) {
     this.setState({
-      contacts: state.contacts,
+      contacts: state.records,
       loaded: state.loaded
     });
   },
