@@ -4,10 +4,10 @@
 # You will need to `npm install browserify react-tools --save-dev` first
 
 echo "-> Converting JSX to JS"
-jsx app/ tmp/
+node_modules/.bin/jsx app/ tmp/
 
 echo "-> Building app bundle"
-browserify -e tmp/main.js > public/bundle.js
+node_modules/.bin/jsx browserify -e tmp/main.js > public/bundle.js
 
 echo "-> Removing tmp/"
 rm -rf tmp
