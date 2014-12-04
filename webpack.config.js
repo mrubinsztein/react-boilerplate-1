@@ -5,7 +5,10 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.js$/, loader: 'jsx-loader'}
+      {test: /\.jsx$/, loader: 'jsx-loader'}
     ]
+  },
+  resolve: {
+    extensions: ["", ".js", ".jsx"]
   }
 };
